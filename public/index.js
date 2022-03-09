@@ -45,6 +45,9 @@ class User {
 				deleteTerm: document.getElementsByClassName('form-delete-term'),
 				formItemLabel: document.getElementsByClassName('form-item-label'),
 			},
+			load: {
+				main: document.getElementById('load-tests'),
+			},
 		};
 		// static test
 		// this.currentSet = [
@@ -97,6 +100,9 @@ class User {
 	}
 	homeButton() {
 		console.log('homeButton');
+		this.selectors.currentPage.style.display = 'none';
+		this.selectors.card.cardContainer.style.display = 'block';
+		this.selectors.currentPage = this.selectors.card.cardContainer;
 		// go to main screen
 	}
 	createParty() {
@@ -112,12 +118,15 @@ class User {
 		console.log('createSet');
 		this.selectors.currentPage.style.display = 'none';
 		this.selectors.form.studySetForm.style.display = 'block';
+		this.selectors.currentPage = this.selectors.form.studySetForm;
 
 		//
 	}
 	loadSet() {
 		console.log('loadSet');
-
+		this.selectors.currentPage.style.display = 'none';
+		this.selectors.load.main.style.display = 'block';
+		this.selectors.currentPage = this.selectors.load.main;
 		//
 	}
 	settings() {
@@ -178,7 +187,39 @@ class User {
 			}
 		}
 		this.newCards();
-		// localStorage.setItem("SET", )
+		this.saveSet();
+	}
+	saveSet() {
+		/*  Structure -
+				  test 1,                                          test 2
+savedforms = [   [testName,{term:null,def:null},{etc..},{etc..}], [testName,{term:null,def:null},{etc..},{etc..}]   ]
+		*/
+
+		let previousForms = localStorage.getItem('saved-forms');
+		/* User has no saved sets in local storage */
+		if (!previousForms) {
+			console.log('You have no previous forms');
+
+			// init empty array (should refactor)
+			localStorage.setItem('saved-forms', JSON.stringify([]));
+
+			// access arr just made
+			let sf = JSON.parse(localStorage.getItem('saved-forms'));
+
+			sf.push(this.currentSet);
+
+			// save
+			localStorage.setItem('saved-forms', JSON.stringify(sf));
+			return;
+		}
+
+		// get previous forms
+		let pf = JSON.parse(previousForms);
+
+		pf.push(this.currentSet);
+
+		// save
+		localStorage.setItem('saved-forms', JSON.stringify(pf));
 	}
 	newCards() {
 		let set = [];
