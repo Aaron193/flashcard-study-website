@@ -126,22 +126,6 @@ main {
 	margin: 0 1.5rem;
 }
 
-/*SVG COLORING*/
-.fa-primary {
-	/* color: #7fa29a; */
-	color: cyan;
-}
-
-.fa-secondary {
-	/* color: #7fa29a; */
-	color: limegreen;
-}
-
-/* .fa-primary,
-.fa-secondary {
-	transition: var(--transition-speed);
-} */
-
 .logo {
 	font-weight: bold;
 	text-transform: uppercase;
@@ -168,6 +152,33 @@ main {
 
 .navbar:hover .logo svg {
 	transform: rotate(-180deg);
+}
+
+.image-settings {
+	display: flex;
+	align-items: center;
+	width: 2.5rem;
+	height: 2.5rem;
+	font-size: 1rem;
+	background: transparent;
+	border: none;
+	color: var(--text-primary);
+	text-decoration: none;
+	filter: grayscale(100%);
+	transition: var(--transition-speed);
+}
+.image-joinGame {
+	display: flex;
+	align-items: center;
+	width: 1.9rem;
+	height: 2.5rem;
+	font-size: 1rem;
+	background: transparent;
+	border: none;
+	color: var(--text-primary);
+	text-decoration: none;
+	filter: grayscale(100%);
+	transition: var(--transition-speed);
 }
 
 /* CARDs*/
@@ -341,16 +352,12 @@ main {
 	}
 
 	.navbar:hover {
-		width: 13.5rem;
+		width: 12.5rem;
 	}
 
 	.navbar:hover .link-text {
 		display: inline;
 	}
-
-	/* .navbar:hover .logo svg {
-		margin-left: 11rem;
-	} */
 
 	.navbar:hover .logo-text {
 		left: 0px;
@@ -365,5 +372,11 @@ main {
 	}
 	.card-text {
 		font-size: 2rem;
+	}
+	.nav-link svg {
+		margin-left: 1.1rem;
+	}
+	.home-button {
+		margin-left: 1.5rem !important;
 	}
 }

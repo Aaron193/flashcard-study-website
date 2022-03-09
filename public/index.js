@@ -28,10 +28,11 @@ class User {
 			},
 
 			navButtons: {
-				createGame: document.getElementById('create-game'),
-				joinGame: document.getElementById('join-game'),
+				homeButton: document.getElementById('home-button'),
 				createSet: document.getElementById('create-set'),
 				loadSet: document.getElementById('load-set'),
+				createParty: document.getElementById('create-party'),
+				joinParty: document.getElementById('join-party'),
 				settings: document.getElementById('settings'),
 			},
 			form: {
@@ -74,11 +75,14 @@ class User {
 	}
 	clickedNavButton(ele) {
 		switch (ele) {
-			case 'createGame':
-				this.createGame();
+			case 'homeButton':
+				this.homeButton();
 				break;
-			case 'joinGame':
-				this.joinGame();
+			case 'createParty':
+				this.createParty();
+				break;
+			case 'joinParty':
+				this.joinParty();
 				break;
 			case 'createSet':
 				this.createSet();
@@ -91,29 +95,33 @@ class User {
 				break;
 		}
 	}
-	createSet() {
-		console.log('clicked');
-		//
+	homeButton() {
+		console.log('homeButton');
+		// go to main screen
 	}
-	joinGame() {
-		console.log('clicked');
+	createParty() {
+		//
+		console.log('createParty');
+	}
+	joinParty() {
+		console.log('joinParty');
 
 		//
 	}
 	createSet() {
-		console.log('clicked');
+		console.log('createSet');
 		this.selectors.currentPage.style.display = 'none';
 		this.selectors.form.studySetForm.style.display = 'block';
 
 		//
 	}
 	loadSet() {
-		console.log('clicked');
+		console.log('loadSet');
 
 		//
 	}
 	settings() {
-		console.log('clicked');
+		console.log('settings');
 
 		//
 	}
