@@ -4,7 +4,6 @@ class User {
 		this.selectors = {
 			currentPage: document.getElementsByClassName('card-container')[0],
 			card: {
-				// why do i have this twice?
 				cardContainer: document.getElementsByClassName('card-container')[0],
 				cardTitle: document.getElementsByClassName('card-title')[0],
 			},
@@ -21,6 +20,7 @@ class User {
 				studySetForm: document.getElementsByClassName('study-set-form')[0],
 				addTermButton: document.getElementById('form-button-add-item'),
 				formItemWrapper: document.getElementById('form-item-wrapper'),
+				formName: document.getElementById('form-name'),
 				formItem: document.getElementsByClassName('form-item'),
 				formInput: document.getElementsByClassName('form-item-input'),
 				formFinish: document.getElementById('form-finish'),
@@ -29,6 +29,7 @@ class User {
 			},
 			load: {
 				main: document.getElementById('load-tests'),
+				savedSetsContainer: document.getElementById('saved-sets-container'),
 			},
 		};
 		// static test
@@ -82,9 +83,8 @@ class User {
 	}
 	homeButton() {
 		console.log('homeButton');
-		this.selectors.currentPage.style.display = 'none';
-		this.selectors.card.cardContainer.style.display = 'block';
-		this.selectors.currentPage = this.selectors.card.cardContainer;
+
+		this.switchPage(this.selectors.currentPage, this.selectors.card.cardContainer);
 		// go to main screen
 	}
 	createParty() {
@@ -98,18 +98,28 @@ class User {
 	}
 	createSet() {
 		console.log('createSet');
-		this.selectors.currentPage.style.display = 'none';
-		this.selectors.form.studySetForm.style.display = 'block';
-		this.selectors.currentPage = this.selectors.form.studySetForm;
+
+		this.switchPage(this.selectors.currentPage, this.selectors.form.studySetForm);
 
 		//
 	}
 	loadSet() {
 		console.log('loadSet');
-		this.selectors.currentPage.style.display = 'none';
-		this.selectors.load.main.style.display = 'block';
-		this.selectors.currentPage = this.selectors.load.main;
-		//
+		this.switchPage(this.selectors.currentPage, this.selectors.load.main);
+
+		// clear saved items
+		let children = this.selectors.load.savedSetsContainer.children;
+		while (children.length >= 1) children[0].remove();
+
+		// load items from localStorage
+		let mySets = JSON.parse(localStorage.getItem('saved-forms'));
+
+		if (mySets != null) {
+			mySets.forEach(set => {
+				let setToAdd = Utils.addSavedSets(set[0].name);
+				this.selectors.load.savedSetsContainer.append(setToAdd);
+			});
+		}
 	}
 	settings() {
 		console.log('settings');
@@ -162,12 +172,19 @@ class User {
 		this.selectors.form.studySetForm.scrollTo(0, this.selectors.form.studySetForm.scrollHeight);
 	}
 	submitForm() {
+		// TOOD: make sure form names cant be repeated
+		if (this.selectors.form.formName.length == 0) {
+			alert('Please enter a set-name!');
+			return;
+		}
+
 		for (let i = 0; i < this.selectors.form.formInput.length; i++) {
 			if (this.selectors.form.formInput[i].value.length == 0) {
 				alert('Please fill all previous cards before submitting!');
 				return;
 			}
 		}
+
 		this.newCards();
 		this.saveSet();
 	}
@@ -210,6 +227,7 @@ savedforms = [   [testName,{term:null,def:null},{etc..},{etc..}], [testName,{ter
 		let slots = 2; // each two textbox's is for one card -- also i should set this number somewhere else
 		let numberOfCards = this.selectors.form.formInput.length / slots;
 
+		set.push({ name: this.selectors.form.formName.value });
 		for (let i = 0; i < numberOfCards; i++) {
 			set.push({
 				term: this.selectors.form.formInput[offset++].value,
@@ -218,13 +236,14 @@ savedforms = [   [testName,{term:null,def:null},{etc..},{etc..}], [testName,{ter
 		}
 		this.currentSet = set;
 		this.currentCard.index = 1; // needs to be 1 or else u need to click twice for the first card to change
-		this.currentCard.term = this.currentSet[0].term;
-		this.currentCard.def = this.currentSet[0].def;
+
+		// index 1 here cuz index 0 is the set name
+		this.currentCard.term = this.currentSet[1].term;
+		this.currentCard.def = this.currentSet[1].def;
 
 		this.updateCard();
 
-		this.selectors.form.studySetForm.style.display = 'none';
-		this.selectors.currentPage.style.display = 'block';
+		this.switchPage(this.selectors.form.studySetForm, this.selectors.card.cardContainer);
 	}
 	deleteFormNode(term) {
 		term.parentNode.remove();
@@ -235,6 +254,12 @@ savedforms = [   [testName,{term:null,def:null},{etc..},{etc..}], [testName,{ter
 		}
 		// !! always update listener after mutating the cards !!
 		this.updateFormDeleteListener();
+	}
+
+	switchPage(curPage, newPage) {
+		curPage.style.display = 'none';
+		newPage.style.display = 'block';
+		this.selectors.currentPage = newPage;
 	}
 }
 

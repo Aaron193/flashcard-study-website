@@ -15,6 +15,20 @@ const Utils = {
 
 		return newCard;
 	},
+	addSavedSets: name => {
+		if (typeof name != 'string') {
+			alert('something went wrong! error code: 02');
+			return;
+		}
+		let newItem = document.createElement('div');
+		newItem.className = 'set-item';
+		newItem.innerHTML = `
+		<h4 class="set-name">${name}</h4>
+		<button class="set-load">Load Set</button>
+		<button class="set-remove">Remove Set</button>
+		<hr>`;
+		return newItem;
+	},
 };
 
 export default Utils;
