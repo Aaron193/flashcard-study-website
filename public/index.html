@@ -74,6 +74,7 @@
 
 		<main>
 			<div class="card-container">
+				<h4 id="card-number"></h4>
 				<div class="card-text">
 					<!-- <div id="card-go-left" class="switch-card"><</div> -->
 					<h3 class="card-title">THIS IS THE TITLE</h3>
@@ -83,7 +84,7 @@
 			</div>
 			<div class="study-set-form">
 				<h2>Create study set form</h2>
-				<input maxlength="45" type="text" placeholder = "Enter set-name..."id="form-name">
+				<input class="input-important" maxlength="45" type="text" placeholder = "Enter set name"id="form-name">
 				<div id="form-item-wrapper">
 					<div class="form-item">
 						<label class="form-item-label">Card 1</label><br />
@@ -93,12 +94,12 @@
 					</div>
 				</div>
 				<br />
-				<button id="form-button-add-item">Add Term</button>
-				<button id="form-finish">Finish</button>
+				<button class="button-primary" id="form-button-add-item">Add Term</button>
+				<button class="button-secondary" id="form-finish">Finish</button>
 			</div>
 			<div id="load-tests">
 				<h1>My Study Sets</h3>
-				<button id="import-JSON">Import A Test</button>
+				<button class="button-3" id="import-JSON">Import test</button>
 				<div id="saved-sets-container">
 
 				</div>

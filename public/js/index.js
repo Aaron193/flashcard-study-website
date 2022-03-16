@@ -6,6 +6,7 @@ class User {
 			card: {
 				cardContainer: document.getElementsByClassName('card-container')[0],
 				cardTitle: document.getElementsByClassName('card-title')[0],
+				cardNumber: document.getElementById('card-number'),
 			},
 
 			navButtons: {
@@ -150,6 +151,12 @@ class User {
 	}
 	lastCard() {
 		console.log('last card');
+		// return to beginning of set
+		this.currentCard.index = 1;
+		this.currentCard.def = this.currentSet[1].def;
+		this.currentCard.term = this.currentSet[1].term;
+
+		this.updateCard();
 	}
 
 	updateFormDeleteListener() {
@@ -234,8 +241,8 @@ savedforms = [   [testName,{term:null,def:null},{etc..},{etc..}], [testName,{ter
 				def: this.selectors.form.formInput[offset++].value,
 			});
 		}
-		this.currentSet = set;
-		this.currentCard.index = 1; // needs to be 1 or else u need to click twice for the first card to change
+		this.currentSet = set; // BUG SOMEWHERE: still repeats first card
+		this.currentCard.index = 2; // needs to be 2 or else it repeats first card
 
 		// index 1 here cuz index 0 is the set name
 		this.currentCard.term = this.currentSet[1].term;

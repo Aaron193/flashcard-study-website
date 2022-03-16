@@ -10,6 +10,10 @@
 	font-size: 16px;
 	font-family: 'Lato', sans-serif;
 
+	/* globals*/
+	--btn-primary-background: #7fa29a28;
+	--btn-secondary-background: #7fa29a;
+
 	/* nav stuff */
 	--text-primary: #7fa29a;
 	--text-secondary: #f2f2f2;
@@ -19,14 +23,11 @@
 
 	/* scroll wheel*/
 	--wheel-color: #576d68;
-
 	/*form stuff*/
 	--form-bg-primary: #202b2b;
 	--form-input-bg: #11181888;
 	--form-border-radius: 15px;
-	--form-button-color: #7fa29a;
 	--f-b1-hvr-color: #4e6661;
-	--form-finish-button-color: #7fa29a28;
 	--f-b2-hvr-color: #9ac5bb6e;
 	--form-delete-color: #e26767;
 }
@@ -59,6 +60,61 @@ main {
 	font-weight: 500;
 	color: var(--text-primary);
 	font-family: 'Lato', sans-serif;
+}
+
+/* GLOBALS */
+.button-primary,
+.set-load {
+	border-radius: var(--form-border-radius);
+	font-family: 'Lato', sans-serif;
+	border: 0.2rem solid #182121;
+	outline: none;
+	background: var(--btn-primary-background);
+	color: var(--btn-secondary-background);
+	font-weight: 600;
+	width: 7.5rem;
+	height: 2rem;
+	cursor: pointer;
+}
+.button-secondary,
+.set-remove {
+	border-radius: var(--form-border-radius);
+	font-family: 'Lato', sans-serif;
+	border: 0.2rem solid #182121;
+	outline: none;
+	background: var(--btn-secondary-background);
+	color: #2f3d3c;
+	font-weight: 600;
+	width: 7.5rem;
+	height: 2rem;
+	cursor: pointer;
+}
+
+.button-3 {
+	border-radius: var(--form-border-radius);
+	font-family: 'Lato', sans-serif;
+	border: 0.2rem solid #182121;
+	outline: none;
+	background: #5990c4;
+	color: #111f1e;
+	font-weight: 600;
+	width: 7.5rem;
+	height: 2rem;
+	cursor: pointer;
+}
+.button-3:hover {
+	background-color: #4e7eaa;
+}
+
+.input-important {
+	width: 14rem;
+	height: 4rem;
+	text-align: center;
+	font-size: 1.43rem;
+	background-color: var(--form-input-bg);
+	color: var(--text-primary);
+	border: none;
+	border-radius: 15px;
 }
 
 .navbar {
@@ -208,6 +264,12 @@ main {
 .card-inner {
 	line-height: 16rem;
 }
+#card-number {
+	text-align: center;
+	display: block;
+	justify-content: center;
+	position: fixed;
+}
 /* .switch-card {
 } */
 
@@ -256,36 +318,16 @@ main {
 	color: var(--text-primary);
 }
 
-/*type: button*/
-#form-button-add-item {
-	border-radius: var(--form-border-radius);
-	font-family: 'Lato', sans-serif;
-	border: 0.2rem solid #182121;
-	outline: none;
-	background: var(--form-button-color);
-	color: #2f3d3c;
-	font-weight: 600;
-	width: 7.5rem;
-	height: 2rem;
-}
-#form-button-add-item:hover {
+#form-button-add-item:hover,
+.button-secondary:hover,
+.set-remove:hover {
 	background-color: var(--f-b1-hvr-color);
 	cursor: pointer;
 }
-/*type: button*/
-#form-finish {
-	border-radius: var(--form-border-radius);
-	font-family: 'Lato', sans-serif;
-	border: 0.2rem solid #182121;
-	outline: none;
-	background: var(--form-finish-button-color);
-	color: var(--form-button-color);
-	font-weight: 600;
-	width: 7.5rem;
-	height: 2rem;
-}
 
-#form-finish:hover {
+#form-finish:hover,
+.button-primary:hover,
+.set-load:hover {
 	background-color: var(--f-b2-hvr-color);
 	cursor: pointer;
 }
@@ -317,6 +359,10 @@ main {
 	justify-content: center;
 	overflow: auto;
 }
+/* TODO: look up how to change color of this */
+/* .set-item hr {
+	background-color: black;
+} */
 
 /* mobile */
 @media only screen and (max-width: 886px) {
