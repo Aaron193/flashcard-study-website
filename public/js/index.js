@@ -31,6 +31,7 @@ class User {
 			load: {
 				main: document.getElementById('load-tests'),
 				savedSetsContainer: document.getElementById('saved-sets-container'),
+				setLoad: document.getElementsByClassName('set-load'),
 			},
 		};
 		// static test
@@ -121,6 +122,32 @@ class User {
 				this.selectors.load.savedSetsContainer.append(setToAdd);
 			});
 		}
+		for (let i = 0; i < this.selectors.load.setLoad.length; i++) {
+			this.selectors.load.setLoad[i].onclick = e => {
+				this.requestLoadSet(e);
+			};
+		}
+	}
+	requestLoadSet(e) {
+		let target = e.path[0],
+			title = target.previousElementSibling.innerText;
+		let savedSets = JSON.parse(localStorage.getItem('saved-forms'));
+
+		for (let i = 0; i < savedSets.length; i++) {
+			if (savedSets[i][0].name == title) {
+				// set the current set to this set
+				this.currentSet = savedSets[i];
+				this.currentCard.index = 2; // needs 2 here
+
+				this.currentCard.term = this.currentSet[1].term;
+				this.currentCard.def = this.currentSet[1].def;
+
+				this.updateCard();
+
+				this.switchPage(this.selectors.load.main, this.selectors.card.cardContainer);
+				return;
+			}
+		}
 	}
 	settings() {
 		console.log('settings');
@@ -132,6 +159,7 @@ class User {
 		this.currentCard.onFront = false;
 	}
 	clickedCard() {
+		// I NEED TO FIX BUG THAT MAKES FIRST CARD REPEAT WHEN I SELECT IT FROM LOADER
 		if (this.currentCard.onFront) {
 			this.flipCard();
 			return;
