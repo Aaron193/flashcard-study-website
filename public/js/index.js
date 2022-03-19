@@ -137,12 +137,13 @@ class User {
 			if (savedSets[i][0].name == title) {
 				// set the current set to this set
 				this.currentSet = savedSets[i];
-				this.currentCard.index = 2; // needs 2 here
+				this.currentCard.index = 1; // needs 2 here
 
 				this.currentCard.term = this.currentSet[1].term;
 				this.currentCard.def = this.currentSet[1].def;
 
-				this.updateCard();
+				// update card here
+				this.selectors.card.cardTitle.innerText = this.currentCard.term;
 
 				this.switchPage(this.selectors.load.main, this.selectors.card.cardContainer);
 				return;
@@ -154,37 +155,53 @@ class User {
 
 		//
 	}
-	flipCard() {
-		this.selectors.card.cardTitle.innerText = this.currentCard.def;
-		this.currentCard.onFront = false;
-	}
-	clickedCard() {
-		// I NEED TO FIX BUG THAT MAKES FIRST CARD REPEAT WHEN I SELECT IT FROM LOADER
-		if (this.currentCard.onFront) {
-			this.flipCard();
-			return;
-		}
-		let card = this.currentSet[this.currentCard.index++];
+
+	nextCard() {
+		let index = this.currentCard.index;
+		let card = this.currentSet[index];
+
+		// we're at last card - reset to first card
 		if (!card) {
 			this.lastCard();
 			return;
 		}
+
+		// set display title of card
 		this.currentCard.term = card.term;
 		this.currentCard.def = card.def;
-		this.updateCard();
-	}
-	updateCard() {
 		this.selectors.card.cardTitle.innerText = this.currentCard.term;
 		this.currentCard.onFront = true;
 	}
-	lastCard() {
-		console.log('last card');
-		// return to beginning of set
-		this.currentCard.index = 1;
-		this.currentCard.def = this.currentSet[1].def;
-		this.currentCard.term = this.currentSet[1].term;
+	clickedCard() {
+		console.log(this.currentCard);
 
-		this.updateCard();
+		// card is on definition, needs to go to next card
+		if (this.currentCard.onFront === false) {
+			// set next cards index here
+			this.currentCard.index++;
+			// display next card if it exists
+			this.nextCard();
+			return;
+		}
+
+		// card is on front - now show definitino
+		let index = this.currentCard.index;
+		let card = this.currentSet[index];
+
+		this.currentCard.term = card.term;
+		this.currentCard.def = card.def;
+		this.selectors.card.cardTitle.innerText = this.currentCard.def;
+		this.currentCard.onFront = false;
+	}
+
+	lastCard() {
+		let index = 1;
+		let card = this.currentSet[index];
+		this.currentCard.index = index;
+		this.currentCard.def = card.def;
+		this.currentCard.term = card.term;
+		this.currentCard.onFront = true;
+		this.selectors.card.cardTitle.innerText = this.currentCard.term;
 	}
 
 	updateFormDeleteListener() {
@@ -270,13 +287,13 @@ savedforms = [   [testName,{term:null,def:null},{etc..},{etc..}], [testName,{ter
 			});
 		}
 		this.currentSet = set; // BUG SOMEWHERE: still repeats first card
-		this.currentCard.index = 2; // needs to be 2 or else it repeats first card
+		this.currentCard.index = 1; // needs to be 2 or else it repeats first card
 
 		// index 1 here cuz index 0 is the set name
 		this.currentCard.term = this.currentSet[1].term;
 		this.currentCard.def = this.currentSet[1].def;
 
-		this.updateCard();
+		this.selectors.card.cardTitle.innerText = this.currentCard.term;
 
 		this.switchPage(this.selectors.form.studySetForm, this.selectors.card.cardContainer);
 	}
