@@ -362,9 +362,12 @@ main {
 	overflow: auto;
 }
 /* TODO: look up how to change color of this */
-/* .set-item hr {
-	background-color: black;
-} */
+.set-item hr {
+	height: 3px;
+	opacity: 0.5;
+	background-color: var(--text-primary);
+	border: none;
+}
 
 #left-right {
 	display: flex;

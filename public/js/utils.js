@@ -29,6 +29,13 @@ const Utils = {
 		<hr>`;
 		return newItem;
 	},
+	findSetNameIndex: (arr, toFind) => {
+		for (let i = 0; i < arr.length; i++) {
+			if (arr[i][0].name == toFind) {
+				return i;
+			}
+		}
+	},
 };
 
 export default Utils;

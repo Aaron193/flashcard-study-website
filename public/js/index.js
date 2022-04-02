@@ -34,6 +34,7 @@ class User {
 				main: document.getElementById('load-tests'),
 				savedSetsContainer: document.getElementById('saved-sets-container'),
 				setLoad: document.getElementsByClassName('set-load'),
+				setRemove: document.getElementsByClassName('set-remove'),
 			},
 		};
 		// static test
@@ -126,11 +127,9 @@ class User {
 				this.selectors.load.savedSetsContainer.append(setToAdd);
 			});
 		}
-		for (let i = 0; i < this.selectors.load.setLoad.length; i++) {
-			this.selectors.load.setLoad[i].onclick = e => {
-				this.requestLoadSet(e);
-			};
-		}
+		for (let i = 0; i < this.selectors.load.setLoad.length; i++) this.selectors.load.setLoad[i].onclick = e => this.requestLoadSet(e);
+
+		for (let i = 0; i < this.selectors.load.setRemove.length; i++) this.selectors.load.setRemove[i].onclick = e => this.deleteLoadSet(e);
 	}
 	requestLoadSet(e) {
 		let target = e.path[0],
@@ -153,6 +152,18 @@ class User {
 				return;
 			}
 		}
+	}
+	deleteLoadSet(e) {
+		let target = e.path[0],
+			savedSets = JSON.parse(localStorage.getItem('saved-forms')),
+			indexOfStorage = Utils.findSetNameIndex(savedSets, target.previousElementSibling.previousElementSibling.innerText);
+
+		savedSets.splice(indexOfStorage, 1);
+
+		localStorage.setItem('saved-forms', JSON.stringify(savedSets));
+
+		// remove html node
+		e.path[1].remove();
 	}
 	settings() {
 		console.log('settings');
