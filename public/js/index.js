@@ -7,6 +7,8 @@ class User {
 				cardContainer: document.getElementsByClassName('card-container')[0],
 				cardTitle: document.getElementsByClassName('card-title')[0],
 				cardNumber: document.getElementById('card-number'),
+				goLeft: document.getElementById('card-go-left'),
+				goRight: document.getElementById('card-go-right'),
 			},
 
 			navButtons: {
@@ -55,6 +57,8 @@ class User {
 		for (let ele in this.selectors.navButtons) this.selectors.navButtons[ele].onclick = () => this.clickedNavButton(ele);
 
 		this.selectors.card.cardContainer.onclick = () => this.clickedCard();
+		this.selectors.card.goLeft.onclick = () => this.cardGoLeft();
+		this.selectors.card.goRight.onclick = () => this.cardGoRight();
 		this.selectors.form.addTermButton.onclick = () => this.addTermToForm();
 		this.selectors.form.formFinish.onclick = () => this.submitForm();
 
@@ -171,6 +175,12 @@ class User {
 		this.currentCard.def = card.def;
 		this.selectors.card.cardTitle.innerText = this.currentCard.term;
 		this.currentCard.onFront = true;
+	}
+	cardGoLeft() {
+		console.log('go left');
+	}
+	cardGoRight() {
+		console.log('go right');
 	}
 	clickedCard() {
 		console.log(this.currentCard);

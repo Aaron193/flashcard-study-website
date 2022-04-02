@@ -13,6 +13,8 @@
 	/* globals*/
 	--btn-primary-background: #7fa29a28;
 	--btn-secondary-background: #7fa29a;
+	--background-dark: #101b1e;
+	--background-dark-hover: #0b1416;
 
 	/* nav stuff */
 	--text-primary: #7fa29a;
@@ -363,6 +365,30 @@ main {
 /* .set-item hr {
 	background-color: black;
 } */
+
+#left-right {
+	display: flex;
+	justify-content: center;
+	font-size: 3rem;
+	height: 2rem;
+	text-align: center;
+	margin-top: -2.2rem;
+}
+
+.switch-card-button {
+	margin-right: 0.4rem;
+	margin-left: 0.4rem;
+	width: 3rem;
+	background-color: var(--background-dark);
+	color: var(--text-primary);
+	font-size: 1.4rem;
+	border: none;
+	border-radius: 0.55rem;
+}
+.switch-card-button:hover {
+	background-color: var(--background-dark-hover);
+	cursor: pointer;
+}
 
 /* mobile */
 @media only screen and (max-width: 886px) {

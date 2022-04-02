@@ -1,7 +1,7 @@
 const Utils = {
 	addTermToForm: cardNumber => {
 		if (typeof cardNumber != 'number') {
-			alert('something went wrong! error code: 01');
+			alert('something went wrong! [01]');
 			return;
 		}
 
@@ -17,7 +17,7 @@ const Utils = {
 	},
 	addSavedSets: name => {
 		if (typeof name != 'string') {
-			alert('something went wrong! error code: 02');
+			alert('something went wrong! [02]');
 			return;
 		}
 		let newItem = document.createElement('div');
