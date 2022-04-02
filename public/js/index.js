@@ -160,48 +160,96 @@ class User {
 		//
 	}
 
-	nextCard() {
-		let index = this.currentCard.index;
-		let card = this.currentSet[index];
+	// nextCard() {
+	// 	let index = this.currentCard.index;
+	// 	let card = this.currentSet[index];
 
-		// we're at last card - reset to first card
-		if (!card) {
-			this.lastCard();
-			return;
-		}
+	// 	// we're at last card - reset to first card
 
-		// set display title of card
-		this.currentCard.term = card.term;
-		this.currentCard.def = card.def;
-		this.selectors.card.cardTitle.innerText = this.currentCard.term;
-		this.currentCard.onFront = true;
-	}
+	// 	// console.log(index);
+
+	// 	// console.log(this.currentSet);
+
+	// 	console.log({ index: index, card: card });
+
+	// 	if (!card) {
+	// 		this.lastCard();
+	// 		return;
+	// 	}
+
+	// 	// set display title of card
+	// 	this.currentCard.term = card.term;
+	// 	this.currentCard.def = card.def;
+	// 	this.selectors.card.cardTitle.innerText = this.currentCard.term;
+	// 	this.currentCard.onFront = true;
+	// }
+
+	// done
 	cardGoLeft() {
-		console.log('go left');
+		this.currentCard.index--;
+		let card = this.currentSet[this.currentCard.index];
+
+		// first card, go to end
+		if (card.name) {
+			let index = this.currentSet.length - 1;
+			this.currentCard.index = index;
+			this.currentCard.term = this.currentSet[index].term;
+			this.currentCard.def = this.currentSet[index].def;
+			let defOrTerm = this.currentCard.onFront ? 'term' : 'definition';
+			this.selectors.card.cardNumber.innerText = `Card ${index}, ${defOrTerm}`;
+
+			this.selectors.card.cardTitle.innerText = this.currentCard.term;
+		} else {
+			// shift left
+			let index = this.currentCard.index;
+			this.currentCard.index = index;
+			this.currentCard.term = this.currentSet[index].term;
+			this.currentCard.def = this.currentSet[index].def;
+			let defOrTerm = this.currentCard.onFront ? 'term' : 'definition';
+			this.selectors.card.cardNumber.innerText = `Card ${index}, ${defOrTerm}`;
+
+			this.selectors.card.cardTitle.innerText = this.currentCard.term; // always show term unless actual card is pressed
+		}
 	}
+
+	// done
 	cardGoRight() {
-		console.log('go right');
+		this.currentCard.index++;
+		let card = this.currentSet[this.currentCard.index];
+
+		// on last card, go to beginning
+		if (!card) {
+			let index = 1; // 0 = title
+			this.currentCard.index = index;
+			this.currentCard.term = this.currentSet[index].term;
+			this.currentCard.def = this.currentSet[index].def;
+			let defOrTerm = this.currentCard.onFront ? 'term' : 'definition';
+			this.selectors.card.cardNumber.innerText = `Card ${index}, ${defOrTerm}`;
+
+			this.selectors.card.cardTitle.innerText = this.currentCard.term; // always show term unless actual card is pressed
+			this.currentCard.onFront = true;
+		} else {
+			// shift right
+			let index = this.currentCard.index;
+			this.currentCard.index = index;
+			this.currentCard.term = this.currentSet[index].term;
+			this.currentCard.def = this.currentSet[index].def;
+			let defOrTerm = this.currentCard.onFront ? 'term' : 'definition';
+			this.selectors.card.cardNumber.innerText = `Card ${index}, ${defOrTerm}`;
+
+			this.selectors.card.cardTitle.innerText = this.currentCard.term;
+			this.currentCard.onFront = true;
+		}
 	}
 	clickedCard() {
-		console.log(this.currentCard);
+		let textToShow = this.currentCard.onFront ? this.currentCard.def : this.currentCard.term;
 
-		// card is on definition, needs to go to next card
-		if (this.currentCard.onFront === false) {
-			// set next cards index here
-			this.currentCard.index++;
-			// display next card if it exists
-			this.nextCard();
-			return;
-		}
+		this.currentCard.onFront = !this.currentCard.onFront;
 
-		// card is on front - now show definitino
-		let index = this.currentCard.index;
-		let card = this.currentSet[index];
+		let defOrTerm = this.currentCard.onFront ? 'term' : 'definition';
+		this.selectors.card.cardNumber.innerText = `Card ${this.currentCard.index}, ${defOrTerm}`;
 
-		this.currentCard.term = card.term;
-		this.currentCard.def = card.def;
-		this.selectors.card.cardTitle.innerText = this.currentCard.def;
-		this.currentCard.onFront = false;
+		this.selectors.card.cardTitle.innerText = textToShow;
 	}
 
 	lastCard() {

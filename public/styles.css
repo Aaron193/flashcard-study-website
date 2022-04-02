@@ -242,7 +242,7 @@ main {
 /* CARDs*/
 .card-container {
 	background-color: #142326;
-	display: flex;
+	display: block;
 	justify-content: center;
 	margin: auto;
 	margin-top: 5rem;
