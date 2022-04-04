@@ -361,7 +361,7 @@ main {
 	justify-content: center;
 	overflow: auto;
 }
-/* TODO: look up how to change color of this */
+
 .set-item hr {
 	height: 3px;
 	opacity: 0.5;

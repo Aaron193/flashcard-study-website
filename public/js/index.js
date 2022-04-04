@@ -37,13 +37,6 @@ class User {
 				setRemove: document.getElementsByClassName('set-remove'),
 			},
 		};
-		// static test
-		// this.currentSet = [
-		// 	{ term: 'term 1', def: 'definition 1' },
-		// 	{ term: 'Title Card 2', def: 'This is a long definition explaining how the number 2 card is long and im writing gibberish idk what im sayuing lollll! 2' },
-		// 	{ term: 'term 3', def: 'Long text here lol hahahaha Mintea pro lol 3' },
-		// 	{ term: 'Who was the first president? (card#4)', def: 'abraham washington?' },
-		// ];
 		this.currentSet = [];
 		this.currentCard = {
 			term: null,
