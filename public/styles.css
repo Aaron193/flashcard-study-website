@@ -91,6 +91,21 @@ main {
 	height: 2rem;
 	cursor: pointer;
 }
+.set-test {
+	border-radius: var(--form-border-radius);
+	font-family: 'Lato', sans-serif;
+	border: 0.2rem solid #182121;
+	outline: none;
+	background: #a0a27f;
+	color: #2f3d3c;
+	font-weight: 600;
+	width: 7.5rem;
+	height: 2rem;
+	cursor: pointer;
+}
+.set-test:hover {
+	background: #7e8064;
+}
 
 .button-3 {
 	border-radius: var(--form-border-radius);
@@ -110,7 +125,7 @@ main {
 
 .input-important {
 	width: 14rem;
-	height: 4rem;
+	height: 3rem;
 	text-align: center;
 	font-size: 1.43rem;
 	background-color: var(--form-input-bg);
@@ -195,11 +210,6 @@ main {
 	letter-spacing: 0.3ch;
 	width: 100%;
 }
-
-/* .logo svg {
-	transform: rotate(0deg);
-	transition: var(--transition-speed);
-} */
 
 .logo-text {
 	display: inline;
@@ -393,12 +403,68 @@ main {
 	cursor: pointer;
 }
 
+/* Test Page */
+#test-page {
+	display: none;
+	background-color: #112a30;
+	justify-content: center;
+	text-align: center;
+	border-radius: 2rem;
+	outline: solid rgb(17, 24, 32) 7px;
+	box-shadow: 0px 8px 27px 0px #161616;
+	margin: auto;
+	font-size: 2rem;
+	margin-top: 9rem;
+	padding: 0.5rem;
+}
+#test-text {
+	justify-content: center;
+	color: var(--text-primary);
+	background: rgba(0, 0, 0, 0.308);
+	margin-bottom: 3rem;
+	bottom: 2rem;
+	height: 4rem;
+	border: none;
+	border-radius: 1rem;
+	outline: none;
+	font-size: 2rem;
+	padding-left: 20px;
+}
+#test-enter {
+	justify-content: center;
+	margin: 0.5rem;
+	margin-right: 10px;
+	color: var(--text-primary);
+	background: rgba(42, 134, 150, 0.568);
+	height: 4rem;
+	width: 8rem;
+	border: none;
+	border-radius: 1rem;
+	outline: none;
+	font-size: 2rem;
+	font-weight: 600;
+	cursor: pointer;
+}
+#test-enter:hover {
+	background: rgba(36, 111, 124, 0.568);
+}
+#test-question {
+	justify-content: center;
+	margin: 2rem;
+	text-align: center;
+	position: relative;
+	display: flex;
+	height: fit-content;
+}
+
 /* mobile */
 @media only screen and (max-width: 886px) {
 	.navbar {
 		bottom: 0;
 		width: 100vw;
 		height: 5rem;
+		/* allow horizontal scrolling on mobile*/
+		overflow: auto;
 	}
 
 	.logo {
@@ -415,6 +481,12 @@ main {
 	.card-container {
 		width: 95vw;
 		height: 45vh;
+	}
+	#test-page {
+		width: 95vw;
+	}
+	#test-text {
+		width: 90%;
 	}
 	.study-set-form {
 		width: 95vw;
@@ -461,6 +533,12 @@ main {
 	.study-set-form {
 		width: 50rem;
 		height: 60rem;
+	}
+	#test-page {
+		width: 48rem;
+	}
+	#test-text {
+		width: 50%;
 	}
 	.card-text {
 		font-size: 2rem;

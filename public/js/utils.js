@@ -26,6 +26,7 @@ const Utils = {
 		<h4 class="set-name">${name}</h4>
 		<button class="set-load">Load Set</button>
 		<button class="set-remove">Remove Set</button>
+		<button class="set-test">Test</button>
 		<hr>`;
 		return newItem;
 	},

@@ -36,6 +36,10 @@ class User {
 				setLoad: document.getElementsByClassName('set-load'),
 				setRemove: document.getElementsByClassName('set-remove'),
 			},
+			test: {
+				testPage: document.getElementById('test-page'),
+				testButtons: document.getElementsByClassName('set-test'),
+			},
 		};
 		this.currentSet = [];
 		this.currentCard = {
@@ -120,9 +124,18 @@ class User {
 				this.selectors.load.savedSetsContainer.append(setToAdd);
 			});
 		}
-		for (let i = 0; i < this.selectors.load.setLoad.length; i++) this.selectors.load.setLoad[i].onclick = e => this.requestLoadSet(e);
 
+		for (let i = 0; i < this.selectors.load.setLoad.length; i++) this.selectors.load.setLoad[i].onclick = e => this.requestLoadSet(e);
+		for (let i = 0; i < this.selectors.test.testButtons.length; i++) this.selectors.test.testButtons[i].onclick = e => this.requestTest(e);
 		for (let i = 0; i < this.selectors.load.setRemove.length; i++) this.selectors.load.setRemove[i].onclick = e => this.deleteLoadSet(e);
+	}
+	requestTest(e) {
+		let target = e.path[0],
+			// find better way..
+			title = target.previousElementSibling.previousElementSibling.previousElementSibling.innerText;
+		let savedSets = JSON.parse(localStorage.getItem('saved-forms'));
+
+		this.switchPage(this.selectors.load.main, this.selectors.test.testPage);
 	}
 	requestLoadSet(e) {
 		let target = e.path[0],
@@ -163,30 +176,6 @@ class User {
 
 		//
 	}
-
-	// nextCard() {
-	// 	let index = this.currentCard.index;
-	// 	let card = this.currentSet[index];
-
-	// 	// we're at last card - reset to first card
-
-	// 	// console.log(index);
-
-	// 	// console.log(this.currentSet);
-
-	// 	console.log({ index: index, card: card });
-
-	// 	if (!card) {
-	// 		this.lastCard();
-	// 		return;
-	// 	}
-
-	// 	// set display title of card
-	// 	this.currentCard.term = card.term;
-	// 	this.currentCard.def = card.def;
-	// 	this.selectors.card.cardTitle.innerText = this.currentCard.term;
-	// 	this.currentCard.onFront = true;
-	// }
 
 	// done
 	cardGoLeft() {
@@ -287,7 +276,7 @@ class User {
 	}
 	submitForm() {
 		// TOOD: make sure form names cant be repeated
-		if (this.selectors.form.formName.length == 0) {
+		if (this.selectors.form.formName.value === '') {
 			alert('Please enter a set-name!');
 			return;
 		}
@@ -348,10 +337,11 @@ savedforms = [   [testName,{term:null,def:null},{etc..},{etc..}], [testName,{ter
 				def: this.selectors.form.formInput[offset++].value,
 			});
 		}
-		this.currentSet = set; // BUG SOMEWHERE: still repeats first card
-		this.currentCard.index = 1; // needs to be 2 or else it repeats first card
+		this.currentSet = set;
 
 		// index 1 here cuz index 0 is the set name
+		this.currentCard.index = 1;
+
 		this.currentCard.term = this.currentSet[1].term;
 		this.currentCard.def = this.currentSet[1].def;
 
@@ -370,11 +360,12 @@ savedforms = [   [testName,{term:null,def:null},{etc..},{etc..}], [testName,{ter
 		this.updateFormDeleteListener();
 	}
 
-	switchPage(curPage, newPage) {
+	switchPage(curPage, newPage, style) {
 		curPage.style.display = 'none';
-		newPage.style.display = 'block';
+		newPage.style.display = style || 'block';
 		this.selectors.currentPage = newPage;
 	}
 }
 
 let user = new User();
+console.log(new TextDecoder().decode(new Uint8Array([99, 115, 115, 32, 105, 115, 32, 104, 97, 114, 100, 32, 67, 58])));
