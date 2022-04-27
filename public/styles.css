@@ -15,11 +15,12 @@
 	--btn-secondary-background: #7fa29a;
 	--background-dark: #101b1e;
 	--background-dark-hover: #0b1416;
+	--bg-main: #2a3132;
 
 	/* nav stuff */
 	--text-primary: #7fa29a;
-	--text-secondary: #f2f2f2;
-	--bg-primary: #142326;
+	--hover-gray: #f2f2f2;
+	--main-color: #142326;
 	--bg-secondary: #243235;
 	--transition-speed: 600ms;
 
@@ -36,7 +37,7 @@
 
 body {
 	color: black;
-	background-color: #2a3132;
+	background-color: var(--bg-main);
 	font-family: 'Lato', sans-serif;
 	margin: 0;
 	padding: 0;
@@ -47,7 +48,7 @@ body::-webkit-scrollbar {
 }
 
 body::-webkit-scrollbar-track {
-	background: var(--bg-primary);
+	background: var(--main-color);
 }
 
 body::-webkit-scrollbar-thumb {
@@ -104,23 +105,22 @@ main {
 	cursor: pointer;
 }
 .set-test:hover {
-	background: #7e8064;
+	opacity: 0.6;
 }
-
-.button-3 {
+.export-set {
 	border-radius: var(--form-border-radius);
 	font-family: 'Lato', sans-serif;
 	border: 0.2rem solid #182121;
 	outline: none;
-	background: #5990c4;
-	color: #111f1e;
+	background: rgb(122 127 170);
+	color: #2f3d3c;
 	font-weight: 600;
 	width: 7.5rem;
 	height: 2rem;
 	cursor: pointer;
 }
-.button-3:hover {
-	background-color: #4e7eaa;
+.export-set:hover {
+	opacity: 0.6;
 }
 
 .input-important {
@@ -136,7 +136,7 @@ main {
 
 .navbar {
 	position: fixed;
-	background-color: var(--bg-primary);
+	background-color: var(--main-color);
 	transition: width 600ms ease;
 	overflow: hidden;
 	font-family: 'Lato', sans-serif;
@@ -159,7 +159,7 @@ main {
 #navbar-nav:hover {
 	filter: grayscale(0%) opacity(1);
 	background: var(--bg-secondary);
-	color: var(--text-secondary);
+	color: var(--hover-gray);
 	cursor: pointer;
 }
 
@@ -184,7 +184,7 @@ main {
 .nav-link:hover {
 	filter: grayscale(0%) opacity(1);
 	background: var(--bg-secondary);
-	color: var(--text-secondary);
+	color: var(--hover-gray);
 	cursor: pointer;
 }
 
@@ -204,7 +204,7 @@ main {
 	text-transform: uppercase;
 	margin-bottom: 1rem;
 	text-align: center;
-	color: var(--text-secondary);
+	color: var(--hover-gray);
 	background: var(--bg-secondary);
 	font-size: 1.5rem;
 	letter-spacing: 0.3ch;
@@ -251,7 +251,7 @@ main {
 
 /* CARDs*/
 .card-container {
-	background-color: #142326;
+	background-color: var(--main-color);
 	display: block;
 	justify-content: center;
 	margin: auto;
@@ -277,6 +277,7 @@ main {
 	line-height: 16rem;
 }
 #card-number {
+	margin: 1.5rem;
 	text-align: center;
 	display: block;
 	justify-content: center;
@@ -303,7 +304,7 @@ main {
 }
 
 .study-set-form::-webkit-scrollbar-track {
-	background: var(--bg-primary);
+	background: var(--main-color);
 }
 
 .study-set-form::-webkit-scrollbar-thumb {
@@ -333,15 +334,15 @@ main {
 #form-button-add-item:hover,
 .button-secondary:hover,
 .set-remove:hover {
-	background-color: var(--f-b1-hvr-color);
-	cursor: pointer;
+	opacity: 0.6;
+	/* background-color: var(--f-b1-hvr-color); */
 }
 
 #form-finish:hover,
 .button-primary:hover,
 .set-load:hover {
-	background-color: var(--f-b2-hvr-color);
-	cursor: pointer;
+	opacity: 0.6;
+	/* background-color: var(--f-b2-hvr-color); */
 }
 .form-delete-term {
 	background: transparent;

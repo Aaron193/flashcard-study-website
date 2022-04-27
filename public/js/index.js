@@ -29,12 +29,14 @@ class User {
 				formFinish: document.getElementById('form-finish'),
 				deleteTerm: document.getElementsByClassName('form-delete-term'),
 				formItemLabel: document.getElementsByClassName('form-item-label'),
+				setItems: document.getElementsByClassName('set-item'),
 			},
 			load: {
 				main: document.getElementById('load-tests'),
 				savedSetsContainer: document.getElementById('saved-sets-container'),
 				setLoad: document.getElementsByClassName('set-load'),
 				setRemove: document.getElementsByClassName('set-remove'),
+				exportSet: document.getElementsByClassName('export-set'),
 			},
 			test: {
 				testPage: document.getElementById('test-page'),
@@ -62,6 +64,32 @@ class User {
 
 		// good that onclick function will not overlap if called multiple times
 		for (let i = 0; i < this.selectors.form.deleteTerm.length; i++) this.selectors.form.deleteTerm[i].onclick = () => this.deleteFormNode(this.selectors.form.deleteTerm[i]);
+
+		/* Check load set if url contains */
+		if (window.location.search == '') return;
+		let myTest = JSON.parse(atob(window.location.search.split('?test=')[1]));
+
+		// show info top left
+		let defOrTerm = this.currentCard.onFront ? 'term' : 'definition';
+		this.selectors.card.cardNumber.innerText = `Card ${this.currentCard.index}, ${defOrTerm}`;
+
+		this.currentSet = myTest;
+		this.currentCard.index = 1; // needs 2 here
+		this.currentCard.term = this.currentSet[1].term;
+		this.currentCard.def = this.currentSet[1].def;
+		this.selectors.card.cardTitle.innerText = this.currentCard.term;
+
+		// save this test to mysets
+		let savedForms = JSON.parse(localStorage.getItem('saved-forms'));
+
+		// check if we already have this test
+		let alreadyHave = Utils.compareSets(savedForms, myTest);
+		if (!alreadyHave) {
+			savedForms.push(myTest);
+			localStorage.setItem('saved-forms', JSON.stringify(savedForms));
+		} else {
+			alert(`You already have a flashcard set with the name "${myTest[0].name}"!`);
+		}
 	}
 	clickedNavButton(ele) {
 		switch (ele) {
@@ -125,9 +153,26 @@ class User {
 			});
 		}
 
+		if (this.selectors.form.setItems.length == 0) {
+			alert('Create flashcard sets to see them here!');
+		}
+
 		for (let i = 0; i < this.selectors.load.setLoad.length; i++) this.selectors.load.setLoad[i].onclick = e => this.requestLoadSet(e);
 		for (let i = 0; i < this.selectors.test.testButtons.length; i++) this.selectors.test.testButtons[i].onclick = e => this.requestTest(e);
 		for (let i = 0; i < this.selectors.load.setRemove.length; i++) this.selectors.load.setRemove[i].onclick = e => this.deleteLoadSet(e);
+		for (let i = 0; i < this.selectors.load.exportSet.length; i++) this.selectors.load.exportSet[i].onclick = e => this.exportSet(e);
+	}
+	exportSet(e) {
+		let target = e.path[0],
+			title = target.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.innerText;
+		let savedSets = JSON.parse(localStorage.getItem('saved-forms'));
+		if (savedSets) {
+			let selectedTest = savedSets.find(a => a[0].name == title);
+			// ensure it wont add this new link to the old link (if any)
+			let link = window.location.origin + window.location.pathname + '?test=' + btoa(JSON.stringify(selectedTest));
+			console.log(link);
+			window.open(link, '_blank');
+		}
 	}
 	requestTest(e) {
 		let target = e.path[0],
@@ -281,6 +326,15 @@ class User {
 			return;
 		}
 
+		let savedForms = JSON.parse(localStorage.getItem('saved-forms'));
+		if (savedForms) {
+			let doesNameExist = savedForms.find(set => set[0].name == this.selectors.form.formName.value);
+			if (doesNameExist) {
+				alert(`A set with the name "${this.selectors.form.formName.value}" already exists!`);
+				return;
+			}
+		}
+
 		for (let i = 0; i < this.selectors.form.formInput.length; i++) {
 			if (this.selectors.form.formInput[i].value.length == 0) {
 				alert('Please fill all previous cards before submitting!');
@@ -340,6 +394,10 @@ savedforms = [   [testName,{term:null,def:null},{etc..},{etc..}], [testName,{ter
 		this.currentSet = set;
 
 		// index 1 here cuz index 0 is the set name
+
+		let defOrTerm = this.currentCard.onFront ? 'term' : 'definition';
+		this.selectors.card.cardNumber.innerText = `Card ${this.currentCard.index}, ${defOrTerm}`;
+
 		this.currentCard.index = 1;
 
 		this.currentCard.term = this.currentSet[1].term;
@@ -368,4 +426,5 @@ savedforms = [   [testName,{term:null,def:null},{etc..},{etc..}], [testName,{ter
 }
 
 let user = new User();
-console.log(new TextDecoder().decode(new Uint8Array([99, 115, 115, 32, 105, 115, 32, 104, 97, 114, 100, 32, 67, 58])));
+// why am i using one big class
+console.log(new TextDecoder()[atob('ZGVjb2Rl')](new Uint8Array([99, 115, 115, 32, 105, 115, 32, 104, 97, 114, 100, 32, 67, 58])));

@@ -27,6 +27,7 @@ const Utils = {
 		<button class="set-load">Load Set</button>
 		<button class="set-remove">Remove Set</button>
 		<button class="set-test">Test</button>
+		<button class="export-set">Copy Link</button>
 		<hr>`;
 		return newItem;
 	},
@@ -36,6 +37,14 @@ const Utils = {
 				return i;
 			}
 		}
+	},
+	compareSets: (savedForms, myTest) => {
+		for (let form of savedForms) {
+			if (form[0].name == myTest[0].name) {
+				return true;
+			}
+		}
+		return false;
 	},
 };
 
