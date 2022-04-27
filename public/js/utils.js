@@ -46,6 +46,23 @@ const Utils = {
 		}
 		return false;
 	},
+	getTestHTML: () => {
+		return `<b id="test-name"> Name of test</b>
+		<div id="stats">
+			<p id="test-stats-score">100%</p>
+			<p id="test-stats-current-question">1/10</p>
+		</div>
+		<b id="test-question"> question text here.</b>
+		<br>
+		<input type="text" placeholder="Enter definition" id="test-text">
+		<button id="test-enter">Enter</button>`;
+	},
+	getEndTestHTML: () => {
+		return `
+		<b id="test-name"> Name of test</b>
+		<p id="end-score">Your Score: </p>
+		<button id="try-again">Try Again</button>
+		`;
+	},
 };
-
 export default Utils;

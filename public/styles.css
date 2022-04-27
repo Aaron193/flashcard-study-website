@@ -56,6 +56,20 @@ body::-webkit-scrollbar-thumb {
 	border-radius: 15px;
 }
 
+nav::-webkit-scrollbar {
+	height: 0.5rem;
+}
+
+nav::-webkit-scrollbar-track {
+	width: 0.5rem;
+	background: var(--main-color);
+}
+
+nav::-webkit-scrollbar-thumb {
+	background: var(--wheel-color);
+	border-radius: 15px;
+}
+
 main {
 	margin-left: 5rem;
 	padding: 0;
@@ -457,15 +471,58 @@ main {
 	display: flex;
 	height: fit-content;
 }
+#test-name {
+	justify-content: center;
+	margin-top: -3rem;
+	color: #32a54a;
+	display: flex;
+	font-size: 1.6rem;
+}
+#stats {
+	display: flex;
+	margin: 1.25rem;
+	margin-top: 0;
+	justify-content: center;
+	font-weight: 600;
+}
+#test-stats-score {
+	margin-right: auto;
+	color: #49ea49;
+}
+#test-stats-current-question {
+	margin-left: auto;
+}
+#end-score {
+	font-weight: 600;
+}
+#try-again {
+	border: none;
+	outline: none;
+	width: 150px;
+	height: 50px;
+	border-radius: 1rem;
+	font-size: 1.25rem;
+	font-weight: 500;
+	background-color: #5fa192;
+	cursor: pointer;
+	margin: 1.25rem;
+}
+#try-again:hover {
+	opacity: 0.8;
+}
 
 /* mobile */
 @media only screen and (max-width: 886px) {
+	body {
+		overflow-x: hidden;
+	}
 	.navbar {
 		bottom: 0;
 		width: 100vw;
 		height: 5rem;
 		/* allow horizontal scrolling on mobile*/
-		overflow: auto;
+		overflow-y: hidden;
+		overflow-x: auto;
 	}
 
 	.logo {

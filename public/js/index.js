@@ -1,4 +1,5 @@
 import Utils from './utils.js';
+import Test from './Test.js';
 class User {
 	constructor() {
 		this.selectors = {
@@ -41,6 +42,9 @@ class User {
 			test: {
 				testPage: document.getElementById('test-page'),
 				testButtons: document.getElementsByClassName('set-test'),
+				testQuestion: document.getElementById('test-question'),
+				testInput: document.getElementById('test-text'),
+				testEnter: document.getElementById('test-enter'),
 			},
 		};
 		this.currentSet = [];
@@ -50,6 +54,7 @@ class User {
 			index: 0,
 			onFront: true, // the card is on the term, false=card is on definition
 		};
+		this.MyTest = null;
 		this.init();
 	}
 	init() {
@@ -83,6 +88,12 @@ class User {
 		let savedForms = JSON.parse(localStorage.getItem('saved-forms'));
 
 		// check if we already have this test
+		if (!savedForms) {
+			localStorage.setItem('saved-forms', JSON.stringify([]));
+			let sf = JSON.parse(localStorage.getItem('saved-forms'));
+			// save
+			localStorage.setItem('saved-forms', JSON.stringify(sf));
+		}
 		let alreadyHave = Utils.compareSets(savedForms, myTest);
 		if (!alreadyHave) {
 			savedForms.push(myTest);
@@ -180,7 +191,14 @@ class User {
 			title = target.previousElementSibling.previousElementSibling.previousElementSibling.innerText;
 		let savedSets = JSON.parse(localStorage.getItem('saved-forms'));
 
+		let test = savedSets.find(a => a[0].name == title);
+		this.MyTest = new Test(title, test);
+
 		this.switchPage(this.selectors.load.main, this.selectors.test.testPage);
+	}
+	tryAgain() {
+		this.MyTest = new Test(this.MyTest.name, this.MyTest.questions, true);
+		console.log('myTEst', this.MyTest);
 	}
 	requestLoadSet(e) {
 		let target = e.path[0],
@@ -426,5 +444,6 @@ savedforms = [   [testName,{term:null,def:null},{etc..},{etc..}], [testName,{ter
 }
 
 let user = new User();
+export default user;
 // why am i using one big class
 console.log(new TextDecoder()[atob('ZGVjb2Rl')](new Uint8Array([99, 115, 115, 32, 105, 115, 32, 104, 97, 114, 100, 32, 67, 58])));
