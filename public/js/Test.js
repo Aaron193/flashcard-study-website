@@ -16,6 +16,20 @@ class Test {
 
 		this.score = null;
 
+		this.KEYS = {
+			ENTER: 13,
+		};
+
+		window.onkeypress = e => {
+			switch (e.which) {
+				case this.KEYS.ENTER:
+					try {
+						this.runValidation();
+					} catch {}
+					break;
+			}
+		};
+
 		this.selectors = {
 			testPage: document.getElementById('test-page'),
 			testName: document.getElementById('test-name'),
@@ -70,9 +84,10 @@ class Test {
 	}
 
 	runValidation() {
-		let userValue = this.selectors.testInput.value;
+		// trim = remove spacing from beginning / end of string
+		let userValue = this.selectors.testInput.value.toLowerCase().trim();
 		let getOppositeMode = this.testMode === 'term' ? 'def' : 'term';
-		let answer = this.questions[this.index][getOppositeMode];
+		let answer = this.questions[this.index][getOppositeMode].toLowerCase().trim();
 
 		this.totalTries++;
 
@@ -89,7 +104,7 @@ class Test {
 		this.showQuestion(this.index);
 	}
 	correct() {
-		console.log('correct!');
+		this.selectors.testInput.value = '';
 		this.totalCorrect++;
 		this.updateScore();
 		this.nextQuestion();

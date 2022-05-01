@@ -1,0 +1,23 @@
+{
+	"name": "studywebsite2",
+	"version": "1.0.0",
+	"description": "",
+	"main": "./server/server.js",
+	"scripts": {
+		"start": "node ./server/server.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Aaron193/flashcard-study-website.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/Aaron193/flashcard-study-website/issues"
+	},
+	"homepage": "https://github.com/Aaron193/flashcard-study-website#readme",
+	"dependencies": {
+		"express": "^4.18.1"
+	}
+}

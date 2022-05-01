@@ -1,5 +1,6 @@
 import Utils from './utils.js';
 import Test from './Test.js';
+import Examples from './Examples.js';
 class User {
 	constructor() {
 		this.selectors = {
@@ -16,8 +17,8 @@ class User {
 				homeButton: document.getElementById('home-button'),
 				createSet: document.getElementById('create-set'),
 				loadSet: document.getElementById('load-set'),
-				createParty: document.getElementById('create-party'),
-				joinParty: document.getElementById('join-party'),
+				// createParty: document.getElementById('create-party'),
+				// joinParty: document.getElementById('join-party'),
 				settings: document.getElementById('settings'),
 			},
 			form: {
@@ -157,16 +158,37 @@ class User {
 		// load items from localStorage
 		let mySets = JSON.parse(localStorage.getItem('saved-forms'));
 
-		if (mySets != null) {
+		if (mySets != null && mySets.length !== 0) {
 			mySets.forEach(set => {
 				let setToAdd = Utils.addSavedSets(set[0].name);
 				this.selectors.load.savedSetsContainer.append(setToAdd);
 			});
+		} else {
+			// has no sets
+			// add some example tests
+			let exampleSet = new Examples();
+			for (let i = 0; i < 2; i++) {
+				let set = exampleSet.newSet()[0];
+				console.log(exampleSet.count);
+				let setToAdd = Utils.addSavedSets(set[0].name);
+				this.selectors.load.savedSetsContainer.append(setToAdd);
+				// save it to storage
+				let savedSets = localStorage.getItem('saved-forms');
+				if (savedSets == null) {
+					console.log('saved');
+					localStorage.setItem('saved-forms', JSON.stringify([set]));
+				} else {
+					// push to empty array
+					let setArray = JSON.parse(savedSets);
+					setArray.push(set);
+					localStorage.setItem('saved-forms', JSON.stringify(setArray));
+				}
+			}
 		}
 
-		if (this.selectors.form.setItems.length == 0) {
-			alert('Create flashcard sets to see them here!');
-		}
+		// if (this.selectors.form.setItems.length == 0) {
+		// 	alert('Create flashcard sets to see them here!');
+		// }
 
 		for (let i = 0; i < this.selectors.load.setLoad.length; i++) this.selectors.load.setLoad[i].onclick = e => this.requestLoadSet(e);
 		for (let i = 0; i < this.selectors.test.testButtons.length; i++) this.selectors.test.testButtons[i].onclick = e => this.requestTest(e);
@@ -216,7 +238,6 @@ class User {
 
 				// update card here
 				this.selectors.card.cardTitle.innerText = this.currentCard.term;
-
 				this.switchPage(this.selectors.load.main, this.selectors.card.cardContainer);
 				return;
 			}
@@ -445,5 +466,5 @@ savedforms = [   [testName,{term:null,def:null},{etc..},{etc..}], [testName,{ter
 
 let user = new User();
 export default user;
-// why am i using one big class
+
 console.log(new TextDecoder()[atob('ZGVjb2Rl')](new Uint8Array([99, 115, 115, 32, 105, 115, 32, 104, 97, 114, 100, 32, 67, 58])));

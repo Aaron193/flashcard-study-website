@@ -271,6 +271,7 @@ main {
 	margin: auto;
 	margin-top: 5rem;
 	padding: 0.5rem;
+	user-select: none;
 }
 .card-container:hover {
 	cursor: pointer;
