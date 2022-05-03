@@ -1,6 +1,8 @@
 import Utils from './utils.js';
 import Test from './Test.js';
 import Examples from './Examples.js';
+
+// TODO: update the term/def title when u switch cards
 class User {
 	constructor() {
 		this.selectors = {
@@ -95,6 +97,8 @@ class User {
 			// save
 			localStorage.setItem('saved-forms', JSON.stringify(sf));
 		}
+		savedForms = JSON.parse(localStorage.getItem('saved-forms'));
+
 		let alreadyHave = Utils.compareSets(savedForms, myTest);
 		if (!alreadyHave) {
 			savedForms.push(myTest);
