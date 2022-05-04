@@ -17,7 +17,7 @@ class ExampleSet {
 		return [
 			[
 				{
-					name: 'French Verbs',
+					name: 'French Verbs (Sample Quiz)',
 				},
 				{
 					term: 'avoir',
@@ -111,7 +111,7 @@ class ExampleSet {
 		return [
 			[
 				{
-					name: 'Cells Vocabulary',
+					name: 'Cells Vocabulary (Sample Quiz)',
 				},
 				{
 					term: "Known as the 'powerhouse' of the cell",

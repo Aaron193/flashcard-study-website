@@ -43,6 +43,10 @@ body {
 	padding: 0;
 }
 
+button {
+	user-select: none;
+}
+
 body::-webkit-scrollbar {
 	width: 0.45rem;
 }
@@ -93,8 +97,21 @@ main {
 	height: 2rem;
 	cursor: pointer;
 }
-.button-secondary,
 .set-remove {
+	border-radius: var(--form-border-radius);
+	font-family: 'Lato', sans-serif;
+	border: 0.2rem solid #182121;
+	outline: none;
+	/* background: var(--btn-secondary-background); */
+	background: #b17272;
+	/* color: #2f3d3c; */
+	color: #0f1613;
+	font-weight: 600;
+	width: 7.5rem;
+	height: 2rem;
+	cursor: pointer;
+}
+.button-secondary {
 	border-radius: var(--form-border-radius);
 	font-family: 'Lato', sans-serif;
 	border: 0.2rem solid #182121;
@@ -112,7 +129,7 @@ main {
 	border: 0.2rem solid #182121;
 	outline: none;
 	background: #a0a27f;
-	color: #2f3d3c;
+	color: #0f1613;
 	font-weight: 600;
 	width: 7.5rem;
 	height: 2rem;
@@ -127,7 +144,7 @@ main {
 	border: 0.2rem solid #182121;
 	outline: none;
 	background: rgb(122 127 170);
-	color: #2f3d3c;
+	color: #0f1613;
 	font-weight: 600;
 	width: 7.5rem;
 	height: 2rem;

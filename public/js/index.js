@@ -2,7 +2,6 @@ import Utils from './utils.js';
 import Test from './Test.js';
 import Examples from './Examples.js';
 
-// TODO: update the term/def title when u switch cards
 class User {
 	constructor() {
 		this.selectors = {
@@ -21,7 +20,8 @@ class User {
 				loadSet: document.getElementById('load-set'),
 				// createParty: document.getElementById('create-party'),
 				// joinParty: document.getElementById('join-party'),
-				settings: document.getElementById('settings'),
+				// settings: document.getElementById('settings'),
+				home: document.getElementById('home'),
 			},
 			form: {
 				studySetForm: document.getElementsByClassName('study-set-form')[0],
@@ -104,12 +104,13 @@ class User {
 			savedForms.push(myTest);
 			localStorage.setItem('saved-forms', JSON.stringify(savedForms));
 		} else {
-			alert(`You already have a flashcard set with the name "${myTest[0].name}"!`);
+			alert(`You already have a flashcard set with the name "${myTest[0].name}"! \nIf this was a set you created, you can share this link with others`);
 		}
 	}
 	clickedNavButton(ele) {
 		switch (ele) {
 			case 'homeButton':
+			case 'home':
 				this.homeButton();
 				break;
 			case 'createParty':
@@ -167,13 +168,13 @@ class User {
 				let setToAdd = Utils.addSavedSets(set[0].name);
 				this.selectors.load.savedSetsContainer.append(setToAdd);
 			});
-		} else {
-			// has no sets
-			// add some example tests
+		}
+
+		// add some sample tests on top of what ppl already have, but dont add it if it already exist
+		if (!mySets || !mySets.some(test => test[0].name === 'French Verbs (Sample Quiz)')) {
 			let exampleSet = new Examples();
 			for (let i = 0; i < 2; i++) {
 				let set = exampleSet.newSet()[0];
-				console.log(exampleSet.count);
 				let setToAdd = Utils.addSavedSets(set[0].name);
 				this.selectors.load.savedSetsContainer.append(setToAdd);
 				// save it to storage
@@ -190,9 +191,7 @@ class User {
 			}
 		}
 
-		// if (this.selectors.form.setItems.length == 0) {
-		// 	alert('Create flashcard sets to see them here!');
-		// }
+		// make sure not to return before listeners are called
 
 		for (let i = 0; i < this.selectors.load.setLoad.length; i++) this.selectors.load.setLoad[i].onclick = e => this.requestLoadSet(e);
 		for (let i = 0; i < this.selectors.test.testButtons.length; i++) this.selectors.test.testButtons[i].onclick = e => this.requestTest(e);
@@ -235,13 +234,14 @@ class User {
 			if (savedSets[i][0].name == title) {
 				// set the current set to this set
 				this.currentSet = savedSets[i];
-				this.currentCard.index = 1; // needs 2 here
+				this.currentCard.index = 1;
 
 				this.currentCard.term = this.currentSet[1].term;
 				this.currentCard.def = this.currentSet[1].def;
 
 				// update card here
 				this.selectors.card.cardTitle.innerText = this.currentCard.term;
+				this.selectors.card.cardNumber.innerText = `Card 1, term`; // will always be this
 				this.switchPage(this.selectors.load.main, this.selectors.card.cardContainer);
 				return;
 			}
@@ -267,6 +267,7 @@ class User {
 
 	// done
 	cardGoLeft() {
+		this.currentCard.onFront = true;
 		this.currentCard.index--;
 		let card = this.currentSet[this.currentCard.index];
 
@@ -295,6 +296,7 @@ class User {
 
 	// done
 	cardGoRight() {
+		this.currentCard.onFront = true;
 		this.currentCard.index++;
 		let card = this.currentSet[this.currentCard.index];
 
@@ -385,7 +387,7 @@ class User {
 			}
 		}
 
-		this.newCards();
+		this.newCards('1');
 		this.saveSet();
 	}
 	saveSet() {
@@ -420,7 +422,7 @@ savedforms = [   [testName,{term:null,def:null},{etc..},{etc..}], [testName,{ter
 		// save
 		localStorage.setItem('saved-forms', JSON.stringify(pf));
 	}
-	newCards() {
+	newCards(cardnum = false) {
 		let set = [];
 		let offset = 0;
 
@@ -439,7 +441,7 @@ savedforms = [   [testName,{term:null,def:null},{etc..},{etc..}], [testName,{ter
 		// index 1 here cuz index 0 is the set name
 
 		let defOrTerm = this.currentCard.onFront ? 'term' : 'definition';
-		this.selectors.card.cardNumber.innerText = `Card ${this.currentCard.index}, ${defOrTerm}`;
+		this.selectors.card.cardNumber.innerText = `Card ${cardnum || this.currentCard.index}, ${defOrTerm}`;
 
 		this.currentCard.index = 1;
 
