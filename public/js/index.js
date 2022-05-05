@@ -6,12 +6,18 @@ class User {
 	constructor() {
 		/* Warn user using safari  (didnt work on my phone for some reason)*/
 		//https://stackoverflow.com/questions/11381673/detecting-a-mobile-browser
+		//https://stackoverflow.com/questions/3007480/determine-if-user-navigated-from-mobile-safari
 		let isSafari =
 			/constructor/i.test(window.HTMLElement) ||
 			(function (p) {
 				return p.toString() === '[object SafariRemoteNotification]';
 			})(!window['safari'] || (typeof safari !== 'undefined' && window['safari'].pushNotification));
-		if (isSafari) alert('Some features may not be available on safari');
+		let ua = window.navigator.userAgent;
+		let iOS = !!ua.match(/iPad/i) || !!ua.match(/iPhone/i);
+		let webkit = !!ua.match(/WebKit/i);
+		let iOSSafari = iOS && webkit && !ua.match(/CriOS/i);
+
+		if (isSafari || iOSSafari) alert('Some features may not be available on safari');
 
 		this.selectors = {
 			currentPage: document.getElementsByClassName('card-container')[0],
