@@ -4,6 +4,15 @@ import Examples from './Examples.js';
 
 class User {
 	constructor() {
+		/* Warn user using safari  (didnt work on my phone for some reason)*/
+		//https://stackoverflow.com/questions/11381673/detecting-a-mobile-browser
+		let isSafari =
+			/constructor/i.test(window.HTMLElement) ||
+			(function (p) {
+				return p.toString() === '[object SafariRemoteNotification]';
+			})(!window['safari'] || (typeof safari !== 'undefined' && window['safari'].pushNotification));
+		if (isSafari) alert('Some features may not be available on safari');
+
 		this.selectors = {
 			currentPage: document.getElementsByClassName('card-container')[0],
 			card: {
