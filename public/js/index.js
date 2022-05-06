@@ -2,22 +2,42 @@ import Utils from './utils.js';
 import Test from './Test.js';
 import Examples from './Examples.js';
 
+// https://stackoverflow.com/questions/36845515/mouseevent-path-equivalent-in-firefox-safari
+// add support for safari ios
+if (!('path' in Event.prototype))
+	Object.defineProperty(Event.prototype, 'path', {
+		get: function () {
+			var path = [];
+			var currentElem = this.target;
+			while (currentElem) {
+				path.push(currentElem);
+				currentElem = currentElem.parentElement;
+			}
+			if (path.indexOf(window) === -1 && path.indexOf(document) === -1) path.push(document);
+			if (path.indexOf(window) === -1) path.push(window);
+			return path;
+		},
+	});
+
 class User {
 	constructor() {
 		/* Warn user using safari  (didnt work on my phone for some reason)*/
 		//https://stackoverflow.com/questions/11381673/detecting-a-mobile-browser
 		//https://stackoverflow.com/questions/3007480/determine-if-user-navigated-from-mobile-safari
-		let isSafari =
-			/constructor/i.test(window.HTMLElement) ||
-			(function (p) {
-				return p.toString() === '[object SafariRemoteNotification]';
-			})(!window['safari'] || (typeof safari !== 'undefined' && window['safari'].pushNotification));
-		let ua = window.navigator.userAgent;
-		let iOS = !!ua.match(/iPad/i) || !!ua.match(/iPhone/i);
-		let webkit = !!ua.match(/WebKit/i);
-		let iOSSafari = iOS && webkit && !ua.match(/CriOS/i);
 
-		if (isSafari || iOSSafari) alert('Some features may not be available on safari');
+		// SHOULD BE FIXED NOW
+
+		// let isSafari =
+		// 	/constructor/i.test(window.HTMLElement) ||
+		// 	(function (p) {
+		// 		return p.toString() === '[object SafariRemoteNotification]';
+		// 	})(!window['safari'] || (typeof safari !== 'undefined' && window['safari'].pushNotification));
+		// let ua = window.navigator.userAgent;
+		// let iOS = !!ua.match(/iPad/i) || !!ua.match(/iPhone/i);
+		// let webkit = !!ua.match(/WebKit/i);
+		// let iOSSafari = iOS && webkit && !ua.match(/CriOS/i);
+
+		// if (isSafari || iOSSafari) alert('Some features may not be available on safari');
 
 		this.selectors = {
 			currentPage: document.getElementsByClassName('card-container')[0],
@@ -90,6 +110,7 @@ class User {
 
 		/* Check load set if url contains */
 		if (window.location.search == '') return;
+
 		let myTest = JSON.parse(atob(window.location.search.split('?test=')[1]));
 
 		// show info top left
@@ -226,6 +247,7 @@ class User {
 		}
 	}
 	requestTest(e) {
+		console.log(e);
 		let target = e.path[0],
 			// find better way..
 			title = target.previousElementSibling.previousElementSibling.previousElementSibling.innerText;
