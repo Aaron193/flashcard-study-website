@@ -560,6 +560,8 @@ main {
 	}
 	#test-page {
 		width: 95vw;
+		font-size: 23px;
+		margin-top: 50px;
 	}
 	#test-text {
 		width: 90%;
