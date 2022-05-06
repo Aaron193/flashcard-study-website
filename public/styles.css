@@ -562,6 +562,10 @@ main {
 		width: 95vw;
 		font-size: 23px;
 		margin-top: 50px;
+		outline: none;
+	}
+	#test-question {
+		margin: 0rem;
 	}
 	#test-text {
 		width: 90%;
